@@ -25,6 +25,8 @@ class Content extends Component {
     return (
       <div className='master-detail-element detail'>
         {this.renderContent()}
+        <h2>{this.props.selectedNote.title}</h2>
+        <p>{this.props.selectedNote.body}</p>
       </div>
     );
   }

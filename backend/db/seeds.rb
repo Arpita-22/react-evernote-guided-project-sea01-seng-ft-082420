@@ -10,5 +10,5 @@ u = User.create(name: ENV['USER'])
 
 Note.destroy_all
 10.times do
-  Note.create(user: u, title: Faker::Lorem.sentence(rand(4) + 1, true), body: Faker::Lorem.paragraphs(3, true).join('\n'))
+  Note.create(user: u, title: Faker::Lorem.sentence(word_count: rand(4) + 1, supplemental: true), body: Faker::Lorem.paragraphs(number: 3, supplemental: true).join('\n'))
 end

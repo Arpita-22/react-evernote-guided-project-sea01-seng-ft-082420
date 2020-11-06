@@ -1,10 +1,18 @@
 import React from 'react';
 
-const NoteItem = (props) => (
-  <li>
-    <h2>Title</h2>
-    <p>Caption...</p>
-  </li>
+
+ let truncate= (str) =>{
+  return str.length > 30 ? str.slice(0, 20) + "..." : str;
+}
+
+const NoteItem = (props) => {
+
+   return(
+     <li onClick={() => props.displayNote(props.note)}>  
+      <h2>{props.note.title}</h2>
+      <p >{truncate(props.note.body)}</p>
+    </li>
 );
+}
 
 export default NoteItem;
