@@ -8,7 +8,8 @@ class NoteContainer extends Component {
     super()
     this.state={
       notes:[],
-      selectedNote:" "
+      selectedNote:" ",
+      clicked:false
     }
   }
 
@@ -28,7 +29,9 @@ class NoteContainer extends Component {
   }
 
   editNote = (note) =>{
-    console.log('hi', note)
+    this.setState(prevState => ({
+      clicked: !prevState.clicked
+    }))
   }
 
 
@@ -38,7 +41,7 @@ class NoteContainer extends Component {
         <Search />
         <div className='container'>
           <Sidebar notes={this.state.notes} displayNote={this.displayNote}/>
-          <Content selectedNote={this.state.selectedNote} editNote={this.editNote}/>
+          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked}/>
         </div>
       </Fragment>
     );

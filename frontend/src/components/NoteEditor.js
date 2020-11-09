@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 
 class NoteEditor extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      title:" ",
+      body:" ",
+      user:{}
+    }
+  }
+
   render() {
+    console.log(this.props.selectedNote)
     return (
       <form className="note-editor">
-        <input type="text" name="title" />
-        <textarea name="body" />
+        <input title={this.state.title} type="text" name="title" />
+        {/* {this.props.selectedNote.title} */}
+        {/* {this.props.selectedNote.body} */}
+        <textarea name="body"  body={this.props.selectedNote.body}/>
         <div className="button-row">
           <input className="button" type="submit" value="Save" />
-          {/* {this.props.editNote} */}
           <button type="button">Cancel</button>
         </div>
       </form>
