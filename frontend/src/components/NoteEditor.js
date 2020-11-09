@@ -8,6 +8,7 @@ class NoteEditor extends Component {
         <textarea name="body" />
         <div className="button-row">
           <input className="button" type="submit" value="Save" />
+          {/* {this.props.editNote} */}
           <button type="button">Cancel</button>
         </div>
       </form>

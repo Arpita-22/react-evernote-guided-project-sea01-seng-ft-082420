@@ -27,6 +27,10 @@ class NoteContainer extends Component {
     })
   }
 
+  editNote = (note) =>{
+    console.log('hi', note)
+  }
+
 
   render() {
     return (
@@ -34,7 +38,7 @@ class NoteContainer extends Component {
         <Search />
         <div className='container'>
           <Sidebar notes={this.state.notes} displayNote={this.displayNote}/>
-          <Content selectedNote={this.state.selectedNote}/>
+          <Content selectedNote={this.state.selectedNote} editNote={this.editNote}/>
         </div>
       </Fragment>
     );

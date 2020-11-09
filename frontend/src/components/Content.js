@@ -14,8 +14,8 @@ class Content extends Component {
   renderContent = () => {
     if (false) {
       return <NoteEditor />;
-    } else if (false) {
-      return <NoteViewer />;
+    } else if (this.props.selectedNote !==" ") {
+      return <NoteViewer selectedNote={this.props.selectedNote} editNote={this.props.editNote} />;
     } else {
       return <Instructions />;
     }
@@ -25,8 +25,6 @@ class Content extends Component {
     return (
       <div className='master-detail-element detail'>
         {this.renderContent()}
-        <h2>{this.props.selectedNote.title}</h2>
-        <p>{this.props.selectedNote.body}</p>
       </div>
     );
   }
