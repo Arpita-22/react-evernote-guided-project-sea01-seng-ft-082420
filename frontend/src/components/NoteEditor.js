@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 class NoteEditor extends Component {
+
   constructor(props){
     super(props)
     this.state={
@@ -10,16 +11,22 @@ class NoteEditor extends Component {
     }
   }
 
+  editTitle = (note) =>{
+    console.log('title')
+  }
+
+  editBody = (note) =>{
+    console.log("body")
+  }
+
   render() {
-    console.log(this.props.selectedNote)
+    const {selectedNote} = this.props
     return (
       <form className="note-editor">
-        <input title={this.state.title} type="text" name="title" />
-        {/* {this.props.selectedNote.title} */}
-        {/* {this.props.selectedNote.body} */}
-        <textarea name="body"  body={this.props.selectedNote.body}/>
+        <input value={selectedNote.title} type="text" name="title" onChange={() => this.editTitle(selectedNote.title)} />
+        <textarea name="body"  value={selectedNote.body}/>
         <div className="button-row">
-          <input className="button" type="submit" value="Save" />
+          <input className="button" type="submit" value="Save" onChange={() => this.editBody(selectedNote.body)}/>
           <button type="button">Cancel</button>
         </div>
       </form>
