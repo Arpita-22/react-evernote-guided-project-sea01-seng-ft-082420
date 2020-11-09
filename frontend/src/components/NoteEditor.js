@@ -11,22 +11,32 @@ class NoteEditor extends Component {
     }
   }
 
-  editTitle = (note) =>{
-    console.log('title')
+  handleEditTitle = (e,note) =>{
+    // console.log(e.target.value)
+    this.setState({
+      ...this.state,title:e.target.value
+    })
+    // console.log(this.state.title)
   }
 
-  editBody = (note) =>{
+  handleEditBody = (note) =>{
     console.log("body")
   }
 
+  handleSubmit = (e) =>{
+    e.preventDefault()
+    console.log(e)
+  }
+
   render() {
+    console.log(this.state.title)
     const {selectedNote} = this.props
     return (
-      <form className="note-editor">
-        <input value={selectedNote.title} type="text" name="title" onChange={() => this.editTitle(selectedNote.title)} />
-        <textarea name="body"  value={selectedNote.body}/>
+      <form className="note-editor" onSubmit={(e) => this.handleSubmit(e)}>
+        <input value={selectedNote.title} type="text" name="title" onChange={(e) => this.handleEditTitle(e,selectedNote.title)} />
+        <textarea name="body"  value={selectedNote.body} onChange={() => this.handleEditBody(selectedNote.body)}/>
         <div className="button-row">
-          <input className="button" type="submit" value="Save" onChange={() => this.editBody(selectedNote.body)}/>
+          <input className="button" type="submit" value="Save" />
           <button type="button">Cancel</button>
         </div>
       </form>
