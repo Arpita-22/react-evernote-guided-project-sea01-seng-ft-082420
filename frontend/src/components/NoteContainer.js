@@ -36,6 +36,7 @@ class NoteContainer extends Component {
 
 
   render() {
+    // console.log(this.state.selectedNote)
     return (
       <Fragment>
         <Search />

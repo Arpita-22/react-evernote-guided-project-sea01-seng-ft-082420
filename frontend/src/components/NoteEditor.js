@@ -5,39 +5,60 @@ class NoteEditor extends Component {
   constructor(props){
     super(props)
     this.state={
-      title:" ",
-      body:" ",
-      user:{}
+      note:{
+      title:this.props.selectedNote.title,
+      body:this.props.selectedNote.body
+      }
     }
   }
 
-  handleEditTitle = (e,note) =>{
-    // console.log(e.target.value)
+  handleEditTitle = (e) =>{
     this.setState({
-      ...this.state,title:e.target.value
+       note:{
+       ...this.state.note, title: e.target.value
+      }
     })
-    // console.log(this.state.title)
   }
 
-  handleEditBody = (note) =>{
-    console.log("body")
+  handleEditBody = (e) =>{
+    this.setState({
+      note:{
+       ...this.state.note,body: e.target.value
+      }
+    })
   }
 
   handleSubmit = (e) =>{
-    e.preventDefault()
+    e.preventDefault()  
+    fetch(`http://localhost:3000/api/v1/notes/${this.props.selectedNote.id}`, {
+    method: 'PATCH', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(this.state.note)
+    })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    })
+  .catch((error) => {
+    console.error('Error:', error);
+    });
+  }
+
+  handleCancelChange = (e) =>{
     console.log(e)
   }
 
+
   render() {
-    console.log(this.state.title)
-    const {selectedNote} = this.props
     return (
       <form className="note-editor" onSubmit={(e) => this.handleSubmit(e)}>
-        <input value={selectedNote.title} type="text" name="title" onChange={(e) => this.handleEditTitle(e,selectedNote.title)} />
-        <textarea name="body"  value={selectedNote.body} onChange={() => this.handleEditBody(selectedNote.body)}/>
+        <input defaultValue={this.state.note.title} type="text" name="title" onChange={(e) => this.handleEditTitle(e)} />
+        <textarea name="body"  defaultValue={this.state.note.body} onChange={(e) => this.handleEditBody(e)}/>
         <div className="button-row">
           <input className="button" type="submit" value="Save" />
-          <button type="button">Cancel</button>
+          <button type="button" onClick={(e) =>this.handleCancelChange(e)}>Cancel</button>
         </div>
       </form>
     );
