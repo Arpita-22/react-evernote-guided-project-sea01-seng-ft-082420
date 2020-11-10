@@ -34,9 +34,6 @@ class NoteContainer extends Component {
     }))
   }
 
-  cancelNote = () =>{
-    
-  }
 
   addNewNote = (e) =>{
     console.log(e)
