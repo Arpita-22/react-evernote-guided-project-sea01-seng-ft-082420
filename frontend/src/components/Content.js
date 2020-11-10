@@ -11,17 +11,31 @@ import Instructions from './Instructions';
           refactor to get this Content component to work.
 */
 class Content extends Component {
+
+  constructor(){
+    super()
+    this.state = {
+      click:false
+    }
+  }
   renderContent = () => {
     if (this.props.clicked === true) {
-      return <NoteEditor selectedNote={this.props.selectedNote}/>;
-    } else if (this.props.selectedNote !==" ") {
+      return <NoteEditor selectedNote={this.props.selectedNote} handleCancelChange={this.handleCancelChange}/>;
+    } else if (this.props.selectedNote !==" " || this.state.click === true ) {
       return <NoteViewer selectedNote={this.props.selectedNote} editNote={this.props.editNote} />;
     } else {
       return <Instructions />;
     }
   }
 
+  handleCancelChange = (e) =>{
+   this.setState(prevState => ({
+     click:!prevState.click
+   }))
+  }
+
   render() {
+    // console.log(this.state.click)
     return (
       <div className='master-detail-element detail'>
         {this.renderContent()}

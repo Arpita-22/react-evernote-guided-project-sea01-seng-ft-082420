@@ -34,14 +34,21 @@ class NoteContainer extends Component {
     }))
   }
 
+  cancelNote = () =>{
+    
+  }
+
+  addNewNote = (e) =>{
+    console.log(e)
+  }
+
 
   render() {
-    // console.log(this.state.selectedNote)
     return (
       <Fragment>
         <Search />
         <div className='container'>
-          <Sidebar notes={this.state.notes} displayNote={this.displayNote}/>
+          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote}/>
           <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked}/>
         </div>
       </Fragment>
