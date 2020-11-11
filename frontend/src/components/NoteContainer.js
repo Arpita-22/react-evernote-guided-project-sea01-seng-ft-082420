@@ -9,7 +9,7 @@ class NoteContainer extends Component {
     this.state={
       notes:[],
       selectedNote:" ",
-      clicked:false
+      clicked:false,
     }
   }
 
@@ -88,12 +88,17 @@ class NoteContainer extends Component {
       console.error('Error:', error);
     });
   }
-
+ 
+  handleSearch = (e) =>{
+    this.setState({
+      notes:[...this.state.notes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
+    })
+  }
 
   render() {
     return (
       <Fragment>
-        <Search />
+        <Search handleSearch={this.handleSearch}/>
         <div className='container'>
           <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote}/>
           <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote}/>
