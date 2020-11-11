@@ -34,19 +34,40 @@ class NoteContainer extends Component {
     }))
   }
 
+  updateNote = (note, id) =>{
+    fetch(`http://localhost:3000/api/v1/notes/${id}`, {
+      method: 'PATCH', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(note)
+      })
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        ...this.state.notes
+      })
+      console.log('Success:', data);
+      })
+    .catch((error) => {
+      console.error('Error:', error);
+      });
+
+  }
 
   addNewNote = (e) =>{
-    console.log(e)
+    // console.log(e)
   }
 
 
   render() {
+    // console.log(this.state.selectedNote)
     return (
       <Fragment>
         <Search />
         <div className='container'>
           <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote}/>
-          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked}/>
+          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote}/>
         </div>
       </Fragment>
     );
