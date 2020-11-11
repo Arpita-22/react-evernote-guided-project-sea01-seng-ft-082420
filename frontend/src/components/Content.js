@@ -15,12 +15,11 @@ class Content extends Component {
 
   renderContent = () => {
     if (this.props.clicked === true && this.props.displayNote) {
-      console.log(this.props)
-      return <NoteEditor selectedNote={this.props.selectedNote} editNote={this.props.editNote} updateNote={this.props.updateNote}/>;
+        return <NoteEditor selectedNote={this.props.selectedNote} editNote={this.props.editNote} updateNote={this.props.updateNote}/>;
     } else if (this.props.selectedNote !==" " && this.props.clicked === false ) {
-      return <NoteViewer  selectedNote={this.props.selectedNote} editNote={this.props.editNote} />;
+        return <NoteViewer  selectedNote={this.props.selectedNote} editNote={this.props.editNote} />;
     } else {
-      return <Instructions />;
+        return <Instructions />;
     }
   }
 

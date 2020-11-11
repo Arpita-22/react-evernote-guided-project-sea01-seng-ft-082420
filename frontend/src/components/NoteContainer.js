@@ -21,8 +21,10 @@ class NoteContainer extends Component {
     }))
 
   }
+
   
   displayNote = (note) =>{
+    // console.log("1111111" ,  note)
     this.setState({
       ...this.state, selectedNote: note
     })
@@ -44,24 +46,46 @@ class NoteContainer extends Component {
       })
     .then(response => response.json())
     .then(data => {
+      console.log('Success:', data);    
+      let updatedNotes = []
+      this.state.notes.map((note) => {
+        if(note.id === data.id) {
+          note.title = data.title
+          note.body = data.body
+        }
+        updatedNotes.push(note)
+      });
       this.setState({
-        ...this.state.notes
+        notes: updatedNotes
       })
-      console.log('Success:', data);
-      })
+    })
     .catch((error) => {
       console.error('Error:', error);
-      });
+    });
 
   }
 
   addNewNote = (e) =>{
     // console.log(e)
+    fetch('http://localhost:3000/api/v1/notes', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
   }
 
 
   render() {
-    // console.log(this.state.selectedNote)
+    // console.log(this.state.notes)
     return (
       <Fragment>
         <Search />
