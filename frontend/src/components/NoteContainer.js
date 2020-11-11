@@ -66,26 +66,31 @@ class NoteContainer extends Component {
   }
 
   addNewNote = (e) =>{
-    // console.log(e)
+    const newNote ={
+      title:"default",
+      body:"placeholder"
+    }
     fetch('http://localhost:3000/api/v1/notes', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newNote),
+    })
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        notes:[...this.state.notes, newNote]
+      })
+    console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 
 
   render() {
-    // console.log(this.state.notes)
     return (
       <Fragment>
         <Search />
