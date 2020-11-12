@@ -2,10 +2,10 @@ import React from 'react';
 import { Wave } from 'react-animated-text';
 
 const Instructions = () => {
-  return <p className="instructions">
+  return <div className="instructions" style={{height:20}}>
     <Wave text="Select a note." effect="stretch" effectChange={2.0} />
     {/* Select a note. */}
-    </p>;
+    </div>;
 }
 
 export default Instructions;

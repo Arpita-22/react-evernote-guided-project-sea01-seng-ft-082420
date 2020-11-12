@@ -25,19 +25,21 @@ class NoteContainer extends Component {
 
   }
 
-  
+  //displays the selected note in the noteviewer
   displayNote = (note) =>{
     this.setState({
       ...this.state, selectedNote: note
     })
   }
 
+//Takes the selected note to the editmode i.e in the noteeditor
   editNote = (note) =>{
     this.setState(prevState => ({
       clicked: !prevState.clicked
     }))
   }
 
+//updates a note in the database
   updateNote = (note, id) =>{
     fetch(`http://localhost:3000/api/v1/notes/${id}`, {
       method: 'PATCH', 
@@ -66,7 +68,7 @@ class NoteContainer extends Component {
     });
 
   }
-
+// adds a new note with default title and placeholder body
   addNewNote = (e) =>{
     const newNote ={
       title:"default",
@@ -98,7 +100,7 @@ class NoteContainer extends Component {
       notes:[...this.state.allNotes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
     })
   }
-
+//removes note from the database
   removeNote = (e) =>{
     fetch(`http://localhost:3000/api/v1/notes/${e.selectedNote.id}`, {
       method: 'DELETE'
@@ -113,29 +115,27 @@ class NoteContainer extends Component {
     });
 
   }
-
-  sortNote = (e) =>{
-    console.log(e.type)
-    console.log(this.state.value)
+// sort's a note by both ascending and descending order
+  sortNote = () =>{
     if (this.state.value % 2 === 0){
       this.setState({
-        notes:[...this.state.notes.sort((a, b) => (b.title > a.title)? 1 : -1)],
-        allNotes:[...this.state.allNotes.sort((a, b) => (b.title > a.title)? 1 : -1)],
+        notes:[...this.state.notes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
+        allNotes:[...this.state.allNotes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
         ...this.state.value, value: this.state.value + 1
       })
     }
     else{
     this.setState({
-      notes:[...this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)],
-      allNotes:[...this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)],
+      notes:[...this.state.notes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
+      allNotes:[...this.state.allNotes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
       ...this.state.value, value: this.state.value + 1
     })
     }
   }
 
   render() {
-    // this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)
-    // this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)
+    // console.log(this.state.notes.sort((a, b) => a.title.localeCompare(b.title)))
+    // console.log(this.state.notes.sort((a, b) => b.title.localeCompare(a.title)))
     return (
       <Fragment>
         <Search handleSearch={this.handleSearch}/>
