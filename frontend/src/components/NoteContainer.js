@@ -54,7 +54,7 @@ class NoteContainer extends Component {
           note.title = data.title
           note.body = data.body
         }
-        updatedNotes.push(note)
+        return updatedNotes.push(note)
       });
       this.setState({
         notes: updatedNotes
@@ -69,7 +69,8 @@ class NoteContainer extends Component {
   addNewNote = (e) =>{
     const newNote ={
       title:"default",
-      body:"placeholder"
+      body:"placeholder",
+      user_id: 3
     }
     fetch('http://localhost:3000/api/v1/notes', {
     method: 'POST', 
@@ -92,20 +93,36 @@ class NoteContainer extends Component {
   }
  
   handleSearch = (e) =>{
-    this.state.notes = this.state.allNotes
     this.setState({
-      notes:[...this.state.notes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
+      notes:[...this.state.allNotes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
     })
   }
 
   removeNote = (e) =>{
+    fetch(`http://localhost:3000/api/v1/notes/${e.selectedNote.id}`, {
+      method: 'DELETE'
+    }).then(() => {
     this.setState({
       selectedNote: " ",
       notes :[...this.state.notes.filter(note => note !== e.selectedNote)]
     })
+       console.log('removed');
+    }).catch(err => {
+      console.error(err)
+    });
+
   }
 
+  // sortNote = () =>{
+  //   this.setState({
+  //     notes:[...this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)],
+  //     allNotes:[...this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)]
+  //   })
+  // }
+
   render() {
+    this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)
+    this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)
     return (
       <Fragment>
         <Search handleSearch={this.handleSearch}/>

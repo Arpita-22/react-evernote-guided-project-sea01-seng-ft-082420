@@ -13,7 +13,7 @@
 
 
 import React from "react";
-import { Wave, Random } from 'react-animated-text';
+import { Random } from 'react-animated-text';
 
 const Header = () => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wave, Random } from 'react-animated-text';
+import { Wave } from 'react-animated-text';
 
 const Instructions = () => {
   return <p className="instructions">
