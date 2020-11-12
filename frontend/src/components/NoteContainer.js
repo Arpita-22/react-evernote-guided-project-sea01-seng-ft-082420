@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Search from './Search';
 import Sidebar from './Sidebar';
 import Content from './Content';
+// import {bounce} from 'react-animations';
 
 class NoteContainer extends Component {
   constructor(){
@@ -24,7 +25,6 @@ class NoteContainer extends Component {
 
   
   displayNote = (note) =>{
-    // console.log("1111111" ,  note)
     this.setState({
       ...this.state, selectedNote: note
     })
@@ -95,13 +95,20 @@ class NoteContainer extends Component {
     })
   }
 
+  removeNote = (e) =>{
+    this.setState({
+      selectedNote: " ",
+      notes :[...this.state.notes.filter(note => note !== e.selectedNote)]
+    })
+  }
+
   render() {
     return (
       <Fragment>
         <Search handleSearch={this.handleSearch}/>
         <div className='container'>
-          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote}/>
-          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote}/>
+          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote} removeNote={this.removeNote}/>
+          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote} removeNote={this.removeNote}/>
         </div>
       </Fragment>
     );
