@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react';
 import Search from './Search';
 import Sidebar from './Sidebar';
 import Content from './Content';
-// import {bounce} from 'react-animations';
 
 class NoteContainer extends Component {
   constructor(){
     super()
     this.state={
       notes:[],
+      allNotes:[],
       selectedNote:" ",
       clicked:false,
     }
@@ -18,7 +18,8 @@ class NoteContainer extends Component {
     fetch('http://localhost:3000/api/v1/notes')
     .then(res => res.json())
     .then(data => this.setState({
-      notes:data
+      notes:data,
+      allNotes:data
     }))
 
   }
@@ -80,7 +81,8 @@ class NoteContainer extends Component {
     .then(response => response.json())
     .then(data => {
       this.setState({
-        notes:[...this.state.notes, newNote]
+        notes:[...this.state.notes, newNote],
+        allNotes:[...this.state.allNotes, newNote]
       })
     console.log('Success:', data);
     })
@@ -90,6 +92,7 @@ class NoteContainer extends Component {
   }
  
   handleSearch = (e) =>{
+    this.state.notes = this.state.allNotes
     this.setState({
       notes:[...this.state.notes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
     })

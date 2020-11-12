@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.4.1",
+    "react-animated-text": "^0.1.4",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4"
   },
