@@ -11,6 +11,7 @@ class NoteContainer extends Component {
       allNotes:[],
       selectedNote:" ",
       clicked:false,
+      value: 0
     }
   }
 
@@ -113,21 +114,33 @@ class NoteContainer extends Component {
 
   }
 
-  // sortNote = () =>{
-  //   this.setState({
-  //     notes:[...this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)],
-  //     allNotes:[...this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)]
-  //   })
-  // }
+  sortNote = (e) =>{
+    console.log(e.type)
+    console.log(this.state.value)
+    if (this.state.value % 2 === 0){
+      this.setState({
+        notes:[...this.state.notes.sort((a, b) => (b.title > a.title)? 1 : -1)],
+        allNotes:[...this.state.allNotes.sort((a, b) => (b.title > a.title)? 1 : -1)],
+        ...this.state.value, value: this.state.value + 1
+      })
+    }
+    else{
+    this.setState({
+      notes:[...this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)],
+      allNotes:[...this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)],
+      ...this.state.value, value: this.state.value + 1
+    })
+    }
+  }
 
   render() {
-    this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)
-    this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)
+    // this.state.notes.sort((a, b) => (a.title > b.title)? 1 : -1)
+    // this.state.allNotes.sort((a, b) => (a.title > b.title)? 1 : -1)
     return (
       <Fragment>
         <Search handleSearch={this.handleSearch}/>
         <div className='container'>
-          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote} removeNote={this.removeNote}/>
+          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote} removeNote={this.removeNote} sortNote={this.sortNote}/>
           <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote} removeNote={this.removeNote}/>
         </div>
       </Fragment>
