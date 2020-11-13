@@ -20,14 +20,14 @@ const Header = () => {
     <div className="nav-bar">
       <ul>
         <li className="nav-item">
-            <h2>
+            <h1>
             <Random
               text="EverNote"
               effect="jump"
               effectChange={2.0}
               effectDuration={0.3}/>
               {/* <Wave text="LOADING DATA" effect="stretch" effectChange={2.0} /> */}
-            </h2>
+            </h1>
           </li>
       </ul>
     </div>

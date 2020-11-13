@@ -60,7 +60,8 @@ class NoteContainer extends Component {
         return updatedNotes.push(note)
       });
       this.setState({
-        notes: updatedNotes
+        notes: updatedNotes,
+        clicked: false
       })
     })
     .catch((error) => {
@@ -85,8 +86,8 @@ class NoteContainer extends Component {
     .then(response => response.json())
     .then(data => {
       this.setState({
-        notes:[...this.state.notes, newNote],
-        allNotes:[...this.state.allNotes, newNote]
+        notes:[...this.state.notes, data],
+        allNotes:[...this.state.allNotes, data]
       })
     console.log('Success:', data);
     })
@@ -95,9 +96,12 @@ class NoteContainer extends Component {
     });
   }
  
+  //searches note by title
   handleSearch = (e) =>{
+    let targetValue = e.target.value.toLowerCase()
     this.setState({
-      notes:[...this.state.allNotes.filter(note => note.title.includes(e.target.value) || note.body.includes(e.target.value))]
+      notes:[...this.state.allNotes.filter(note => note.title.toLowerCase().includes(targetValue))]
+      // notes:[...this.state.allNotes.filter(note => note.title.toLowerCase().includes(targetValue) || note.body.toLowerCase().includes(targetValue))]
     })
   }
 //removes note from the database
@@ -115,33 +119,33 @@ class NoteContainer extends Component {
     });
 
   }
-// sort's a note by both ascending and descending order
+// sort's a note by both ascending and descending order can also use .localeCompare() with sort
   sortNote = () =>{
+    const{notes, allNotes, value} = this.state
     if (this.state.value % 2 === 0){
       this.setState({
-        notes:[...this.state.notes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
-        allNotes:[...this.state.allNotes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
-        ...this.state.value, value: this.state.value + 1
+        notes:[...notes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
+        allNotes:[...allNotes.sort((a, b) => (b.title.toLowerCase() > a.title.toLowerCase())? 1 : -1)],
+        ...value, value: this.state.value + 1
       })
     }
     else{
     this.setState({
-      notes:[...this.state.notes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
-      allNotes:[...this.state.allNotes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
-      ...this.state.value, value: this.state.value + 1
+      notes:[...notes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
+      allNotes:[...allNotes.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase())? 1 : -1)],
+      ...value, value: this.state.value + 1
     })
     }
   }
 
   render() {
-    // console.log(this.state.notes.sort((a, b) => a.title.localeCompare(b.title)))
-    // console.log(this.state.notes.sort((a, b) => b.title.localeCompare(a.title)))
+    const{notes,selectedNote,clicked} = this.state
     return (
       <Fragment>
         <Search handleSearch={this.handleSearch}/>
         <div className='container'>
-          <Sidebar notes={this.state.notes} displayNote={this.displayNote} addNewNote={this.addNewNote} removeNote={this.removeNote} sortNote={this.sortNote}/>
-          <Content selectedNote={this.state.selectedNote} editNote={this.editNote} clicked={this.state.clicked} displayNote={this.displayNote} updateNote={this.updateNote} removeNote={this.removeNote}/>
+          <Sidebar notes={notes} displayNote={this.displayNote} addNewNote={this.addNewNote} removeNote={this.removeNote} sortNote={this.sortNote}/>
+          <Content selectedNote={selectedNote} editNote={this.editNote} clicked={clicked} displayNote={this.displayNote} updateNote={this.updateNote} removeNote={this.removeNote}/>
         </div>
       </Fragment>
     );
